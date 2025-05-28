@@ -10,6 +10,8 @@ import SignInForm from "../cards/user/SignInForm.jsx";
 import SignUpForm from "../cards/user/SignUpForm.jsx";
 import { useAuth } from "../userAuth/AuthContext.jsx";
 
+const REDIRECT_DELAY = 1000; // 1 second delay
+
 const backdropVariants = {
   visible: { opacity: 1 },
   hidden: { opacity: 0 },
@@ -18,23 +20,42 @@ const backdropVariants = {
 const Home = () => {
   const [modal, setModal] = useState(null);
   const navigate = useNavigate();
-  const { user, loading } = useAuth();
+  const { user, loading, error } = useAuth();
 
   useEffect(() => {
-    if (!loading && user ) {
-      toast.info("Redirecting you to dashboard...", { autoClose: 2000 });
-      const timer = setTimeout(() => navigate("/dashboard"), 2000);
+    if (!loading && user) {
+      toast.info("Redirecting you to dashboard...", { autoClose: REDIRECT_DELAY });
+      const timer = setTimeout(() => navigate("/dashboard"), REDIRECT_DELAY);
       return () => clearTimeout(timer);
     }
   }, [user, loading, navigate]);
 
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center">
-        <p className="text-lg text-gray-700">Checking authentication...</p>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
       </div>
     );
   }
+
+  const handleModalClose = () => {
+    setModal(null);
+  };
+
+  const handleModalSwitch = (newModal) => {
+    setModal(newModal);
+  };
+
+  const handleLoginSuccess = () => {
+    handleModalClose();
+    navigate("/dashboard");
+  };
 
   return (
     <>
@@ -51,13 +72,13 @@ const Home = () => {
 
         <div className="flex space-x-6">
           <button
-            onClick={() => setModal("signin")}
+            onClick={() => handleModalSwitch("signin")}
             className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition text-base font-medium"
           >
             Sign In
           </button>
           <button
-            onClick={() => setModal("signup")}
+            onClick={() => handleModalSwitch("signup")}
             className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition text-base font-medium"
           >
             Sign Up
@@ -67,32 +88,26 @@ const Home = () => {
         <AnimatePresence>
           {modal && (
             <motion.div
-              className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50"
+              className="fixed inset-0 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50"
               variants={backdropVariants}
               initial="hidden"
               animate="visible"
               exit="hidden"
-              onClick={() => setModal(null)}
+              onClick={handleModalClose}
             >
               <div onClick={(e) => e.stopPropagation()}>
                 {modal === "signin" && (
                   <SignInForm
-                    onClose={() => setModal(null)}
-                    switchToSignUp={() => setModal("signup")}
-                    onLogin={() => {
-                      setModal(null);
-                      navigate("/dashboard");
-                    }}
+                    onClose={handleModalClose}
+                    switchToSignUp={() => handleModalSwitch("signup")}
+                    onLogin={handleLoginSuccess}
                   />
                 )}
                 {modal === "signup" && (
                   <SignUpForm
-                    onClose={() => setModal(null)}
-                    switchToSignIn={() => setModal("signin")}
-                    onLogin={() => {
-                      setModal(null);
-                      navigate("/dashboard");
-                    }}
+                    onClose={handleModalClose}
+                    switchToSignIn={() => handleModalSwitch("signin")}
+                    onLogin={handleLoginSuccess}
                   />
                 )}
               </div>

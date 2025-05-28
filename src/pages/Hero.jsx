@@ -3,16 +3,11 @@ import { useState } from "react";
 import { UserCog, Eye, DiamondPlus, Hammer } from "lucide-react";
 import AddSparePartModal from "../cards/product/AddSparePartModal";
 import UseSparePartModal from "../cards/product/UseSparePartModal";
-import Header1 from "../components/Dashboardheader/Header1"; // Adjust the import path as necessary
+import Header1 from "../components/Dashboardheader/Header1";
+import { AnimatePresence } from "framer-motion";
 
 const Hero = () => {
   const navigate = useNavigate();
-
-  const [user] = useState({
-    name: "John Doe",
-    email: "john@example.com",
-    role: "admin",
-  });
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [showUseForm, setShowUseForm] = useState(false);
@@ -44,7 +39,7 @@ const Hero = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
-      <Header1 user={user}/>
+      <Header1 />
       <main className="flex md:flex-row flex-col cursor-default h-screen bg-gray-100 p-10 gap-6">
         {/* Left Side */}
         <div className="md:w-1/3 flex justify-center items-center">
@@ -76,16 +71,12 @@ const Hero = () => {
               {/* Add Spare Part */}
               <div className="bg-white shadow rounded-xl p-5 flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-800">
-                    Add Spare Part
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Register new items to your inventory.
-                  </p>
+                  <h3 className="text-lg font-bold text-gray-800">Add Spare Part</h3>
+                  <p className="text-sm text-gray-600">Register new items to your inventory.</p>
                 </div>
                 <button
                   onClick={() => setShowAddForm(true)}
-                  className="bg-blue-300 hover:bg-gray-300 text-black px-4 py-2 rounded"
+                  className="bg-blue-300 hover:bg-gray-300 text-black px-8 py-2 rounded"
                 >
                   <div className="flex items-center space-x-2">
                     <DiamondPlus size={20} />
@@ -97,12 +88,8 @@ const Hero = () => {
               {/* Use Spare Part */}
               <div className="bg-white shadow rounded-xl p-5 flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-800">
-                    Use Spare Part
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Log usage of spare parts.
-                  </p>
+                  <h3 className="text-lg font-bold text-gray-800">Use Spare Part</h3>
+                  <p className="text-sm text-gray-600">Log usage of spare parts.</p>
                 </div>
                 <button
                   onClick={() => {
@@ -112,7 +99,7 @@ const Hero = () => {
                     }));
                     setShowUseForm(true);
                   }}
-                  className="bg-blue-300 hover:bg-gray-300 text-black px-4 py-2 rounded"
+                  className="bg-blue-300 hover:bg-gray-300 text-black px-8 py-2 rounded"
                 >
                   <div className="flex items-center space-x-2">
                     <Hammer size={20} />
@@ -124,16 +111,12 @@ const Hero = () => {
               {/* View All Parts */}
               <div className="bg-white shadow rounded-xl p-5 flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-800">
-                    View All Parts
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Review and manage only by Admin.
-                  </p>
+                  <h3 className="text-lg font-bold text-gray-800">View All Parts</h3>
+                  <p className="text-sm text-gray-600">Review and manage only by Admin.</p>
                 </div>
                 <button
                   onClick={() => navigate("/stat")}
-                  className="bg-blue-300 hover:bg-gray-300 text-black px-4 py-2 rounded"
+                  className="bg-blue-300 hover:bg-gray-300 text-black px-7 py-2 rounded"
                 >
                   <div className="flex items-center space-x-2">
                     <Eye size={20} />
@@ -146,23 +129,25 @@ const Hero = () => {
         </div>
       </main>
 
-      {/* Modals */}
-      {showAddForm && (
-        <AddSparePartModal
-          formData={addForm}
-          setFormData={setAddForm}
-          onSubmit={handleAddSubmit}
-          onCancel={() => setShowAddForm(false)}
-        />
-      )}
-      {showUseForm && (
-        <UseSparePartModal
-          formData={useForm}
-          setFormData={setUseForm}
-          onSubmit={handleUseSubmit}
-          onCancel={() => setShowUseForm(false)}
-        />
-      )}
+      {/* Modals with AnimatePresence */}
+      <AnimatePresence>
+        {showAddForm && (
+          <AddSparePartModal
+            formData={addForm}
+            setFormData={setAddForm}
+            onSubmit={handleAddSubmit}
+            onCancel={() => setShowAddForm(false)}
+          />
+        )}
+        {showUseForm && (
+          <UseSparePartModal
+            formData={useForm}
+            setFormData={setUseForm}
+            onSubmit={handleUseSubmit}
+            onCancel={() => setShowUseForm(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

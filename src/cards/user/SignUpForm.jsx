@@ -120,7 +120,7 @@ const SignUpForm = ({ onClose, switchToSignIn }) => {
       <div className="mt-4 text-sm text-center text-gray-600">
         Already have an account?{" "}
         <button onClick={switchToSignIn} className="text-blue-600 hover:underline">
-          Login
+         Sign In
         </button>
       </div>
 

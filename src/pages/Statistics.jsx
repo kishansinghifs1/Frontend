@@ -126,14 +126,14 @@ const Statistics = () => {
       <div className="flex gap-4 mb-6">
         <button
           onClick={exportCSV}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500"
+          className="bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           Export CSV
         </button>
       </div>
 
       {loading && <p>Loading usage data...</p>}
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-blue-400">{error}</p>}
 
       {!loading && !error && (
         <>

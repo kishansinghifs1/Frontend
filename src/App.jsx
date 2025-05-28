@@ -10,11 +10,21 @@ import Home from "./pages/Home";
 import Hero from "./pages/Hero";
 import Statistics from "./pages/Statistics";
 import { ProtectedRoute } from "./userAuth/ProtectedRoute";
+import ErrorBoundary from "./components/ErrorBoundary";
+
+const TOAST_CONFIG = {
+  position: "top-center",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+};
 
 function App() {
   return (
-    <>
-     <Routes>
+    <ErrorBoundary>
+      <Routes>
         <Route path="/" element={<Home />} />
 
         <Route
@@ -37,9 +47,9 @@ function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <ToastContainer position="top-center" autoClose={2000} />
+      <ToastContainer {...TOAST_CONFIG} />
       <Footer />
-    </>
+    </ErrorBoundary>
   );
 }
 

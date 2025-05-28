@@ -4,37 +4,77 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-
   const [loading, setLoading] = useState(true);
-  console.log(user)
+  const [error, setError] = useState(null);
 
-  // Fetch user info on mount
+  const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8787/api/v1";
+
   const fetchUser = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8787/api/v1/user/me", {
-        credentials: "include", // ✅ this sends the cookie!
+      setLoading(true);
+      setError(null);
+      const res = await fetch(`${API_URL}/user/me`, {
+        credentials: "include",
       });
-      if (!res.ok) throw new Error("Not authenticated");
+      
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || "Authentication failed");
+      }
+      
       const data = await res.json();
       setUser(data.user);
-    } catch {
+    } catch (err) {
+      setError(err.message);
       setUser(null);
     } finally {
       setLoading(false);
     }
   };
+
+  const login = async (credentials) => {
+    try {
+      setLoading(true);
+      setError(null);
+      // Add your login logic here
+      await fetchUser();
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      // Add your logout logic here
+      setUser(null);
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchUser();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, setUser }}>
+    <AuthContext.Provider value={{ user, loading, error, setUser, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-// Custom hook for easy access
 export function useAuth() {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 }

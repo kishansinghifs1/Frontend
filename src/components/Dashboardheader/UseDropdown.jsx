@@ -1,8 +1,26 @@
-import { Mail, User, Shield } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-
+import { Mail, User, Shield } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../userAuth/AuthContext";
 const UserDropdown = ({ user }) => {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8787/api/v1/user/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      if (response.ok) {
+        setUser(null); // Clear user state on frontend
+        navigate("/");
+      } else {
+        console.error("Failed to logout");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
 
   return (
     <div className="absolute right-0 mt-2 w-96 p-6 rounded-xl shadow-2xl backdrop-blur-md bg-blue-200/70 text-black text-base z-50">
@@ -23,7 +41,7 @@ const UserDropdown = ({ user }) => {
       </p>
       <button
         className="w-full bg-blue-900 text-white py-2 cursor-pointer rounded hover:bg-blue-400 transition"
-        onClick={() => navigate('/')}
+        onClick={handleLogout}
       >
         Logout
       </button>

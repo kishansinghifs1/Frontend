@@ -100,7 +100,7 @@ const SignInForm = ({ onClose, switchToSignUp }) => {
               Forgot password?
             </button>
             <button onClick={switchToSignUp} className="hover:underline">
-              New here? Sign up
+              New here? Sign Up
             </button>
           </div>
 
