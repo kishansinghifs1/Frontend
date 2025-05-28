@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-// 👇 Cache used across component mounts
+// 👇 In-memory cache
 let cachedUsedParts = null;
 
 const formatDate = (date) => date.toISOString().split("T")[0];
@@ -46,6 +46,15 @@ const Statistics = () => {
 
   useEffect(() => {
     const loadData = async () => {
+      // Check if the page was reloaded
+      const isReload = sessionStorage.getItem("reloaded") === "true";
+
+      if (isReload) {
+        // Clear cache and session flag
+        cachedUsedParts = null;
+        sessionStorage.removeItem("reloaded");
+      }
+
       if (cachedUsedParts) {
         setUsedParts(cachedUsedParts);
         setLoading(false);
@@ -56,7 +65,7 @@ const Statistics = () => {
         const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/product`);
         const data = await res.json();
         const used = data.filter((item) => item.isUsed);
-        cachedUsedParts = used; // ✅ Cache it
+        cachedUsedParts = used;
         setUsedParts(used);
         setLoading(false);
       } catch (err) {
@@ -66,6 +75,13 @@ const Statistics = () => {
     };
 
     loadData();
+  }, []);
+
+  // Detect hard reloads and store flag
+  useEffect(() => {
+    if (performance.getEntriesByType("navigation")[0]?.type === "reload") {
+      sessionStorage.setItem("reloaded", "true");
+    }
   }, []);
 
   const groupedData = groupUsage(usedParts, period);
@@ -110,9 +126,7 @@ const Statistics = () => {
         {["weekly", "monthly", "yearly"].map((p) => (
           <button
             key={p}
-            className={`px-4 py-2 rounded ${
-              period === p ? "bg-blue-600 text-white" : "bg-gray-300"
-            }`}
+            className={`px-4 py-2 rounded ${period === p ? "bg-blue-600 text-white" : "bg-gray-300"}`}
             onClick={() => {
               setPeriod(p);
               setPage(1);
