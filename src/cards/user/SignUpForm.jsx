@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-import AuthCard from "./AuthCard";
+import AuthCard from "./Authcard";
 import { useAuth } from "../../userAuth/AuthContext.jsx";
 
 const SignUpForm = ({ onClose, switchToSignIn }) => {

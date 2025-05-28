@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AuthCard from "./AuthCard";
+import AuthCard from "./Authcard";
 import { toast } from "react-toastify"; // import toast
 import "react-toastify/dist/ReactToastify.css";
 

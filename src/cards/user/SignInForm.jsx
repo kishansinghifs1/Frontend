@@ -4,7 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-import AuthCard from "./AuthCard";
+import AuthCard from "./Authcard";
 import ForgotPasswordCard from "./ForgotPasswordCard";
 import { useAuth } from "../../userAuth/AuthContext.jsx";
 
