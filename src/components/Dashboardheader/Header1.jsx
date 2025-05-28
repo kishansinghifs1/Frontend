@@ -1,10 +1,16 @@
 import { FaUserCircle } from "react-icons/fa";
 import { useState } from "react";
 import { Cog } from "lucide-react";
-import UserDropdown from "./UseDropdown.jsx"; // Adjust the import path as necessary";
+import UserDropdown from "./UseDropdown.jsx"; // Adjust path if needed
+import { useAuth } from "../../userAuth/AuthContext.jsx"; // Import your auth hook
 
-const Header2 = ({ user }) => {
+const Header2 = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+
+  // Get user from AuthContext
+  const { user } = useAuth();
+
+  if (!user) return null; // or a loading state, if user can be null
 
   return (
     <header className="flex justify-between fixed top-0 w-full items-center px-8 py-6 bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white shadow-md z-50">

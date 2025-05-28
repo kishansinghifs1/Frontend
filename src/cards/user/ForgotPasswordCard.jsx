@@ -1,5 +1,7 @@
 import { useState } from "react";
 import AuthCard from "./AuthCard";
+import { toast } from "react-toastify"; // import toast
+import "react-toastify/dist/ReactToastify.css";
 
 const ForgotPasswordCard = ({ onBack }) => {
   const [email, setEmail] = useState("");
@@ -24,6 +26,7 @@ const ForgotPasswordCard = ({ onBack }) => {
       }
 
       setStatus("Reset link sent! Check your email.");
+      toast.success("Reset link sent! Check your email.");  // toast success here
     } catch (err) {
       setError(err.message);
     }

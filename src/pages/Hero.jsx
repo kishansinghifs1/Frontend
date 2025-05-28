@@ -132,7 +132,7 @@ const Hero = () => {
                   </p>
                 </div>
                 <button
-                  onClick={() => navigate("/all-parts")}
+                  onClick={() => navigate("/stat")}
                   className="bg-blue-300 hover:bg-gray-300 text-black px-4 py-2 rounded"
                 >
                   <div className="flex items-center space-x-2">

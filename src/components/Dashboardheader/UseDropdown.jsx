@@ -5,7 +5,7 @@ const UserDropdown = ({ user }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="absolute right-0 mt-2 w-72 p-6 rounded-xl shadow-2xl backdrop-blur-md bg-blue-200/70 text-black text-base z-50">
+    <div className="absolute right-0 mt-2 w-96 p-6 rounded-xl shadow-2xl backdrop-blur-md bg-blue-200/70 text-black text-base z-50">
       <p className="mb-1 flex items-center space-x-2">
         <User size={20} className="text-gray-600" />
         <strong>Name:</strong>
