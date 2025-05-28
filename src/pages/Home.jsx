@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Cog } from "lucide-react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Header from "../components/Header";
@@ -10,7 +10,7 @@ import SignInForm from "../cards/user/SignInForm.jsx";
 import SignUpForm from "../cards/user/SignUpForm.jsx";
 import { useAuth } from "../userAuth/AuthContext.jsx";
 
-const REDIRECT_DELAY = 1000; // 1 second delay
+const REDIRECT_DELAY = 1000;
 
 const backdropVariants = {
   visible: { opacity: 1 },
@@ -36,6 +36,17 @@ const Home = () => {
     }
   }, [error]);
 
+  useEffect(() => {
+    if (modal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [modal]);
+
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center">
@@ -44,14 +55,8 @@ const Home = () => {
     );
   }
 
-  const handleModalClose = () => {
-    setModal(null);
-  };
-
-  const handleModalSwitch = (newModal) => {
-    setModal(newModal);
-  };
-
+  const handleModalClose = () => setModal(null);
+  const handleModalSwitch = (newModal) => setModal(newModal);
   const handleLoginSuccess = () => {
     handleModalClose();
     navigate("/dashboard");
@@ -115,6 +120,7 @@ const Home = () => {
           )}
         </AnimatePresence>
       </div>
+      <ToastContainer />
     </>
   );
 };

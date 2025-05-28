@@ -53,7 +53,7 @@ const Statistics = () => {
       }
 
       try {
-        const res = await fetch("http://127.0.0.1:8787/api/v1/product");
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/product`);
         const data = await res.json();
         const used = data.filter((item) => item.isUsed);
         cachedUsedParts = used; // ✅ Cache it

@@ -7,13 +7,11 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8787/api/v1";
-
   const fetchUser = async () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch(`${API_URL}/user/me`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/me`, {
         credentials: "include",
       });
       

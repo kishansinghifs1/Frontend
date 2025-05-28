@@ -34,7 +34,7 @@ const AddSparePartModal = ({ formData, setFormData, onCancel }) => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://127.0.0.1:8787/api/v1/product/add", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/product/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // <-- This sends cookies!

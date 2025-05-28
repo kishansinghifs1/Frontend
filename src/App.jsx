@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import "./index.css";
 
 import Footer from "./components/Footer";
-import NotFound from "./pages/Notfound";
+import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Hero from "./pages/Hero";
 import Statistics from "./pages/Statistics";
@@ -24,31 +24,34 @@ const TOAST_CONFIG = {
 function App() {
   return (
     <ErrorBoundary>
-      <Routes>
-        <Route path="/" element={<Home />} />
+      <>
+        <Routes>
+          <Route path="/" element={<Home />} />
 
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Hero />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Hero />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/stat"
-          element={
-            <ProtectedRoute requiredRole="SUPER_ADMIN">
-              <Statistics />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/stat"
+            element={
+              <ProtectedRoute requiredRole="SUPER_ADMIN">
+                <Statistics />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <ToastContainer {...TOAST_CONFIG} />
-      <Footer />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+
+        <ToastContainer {...TOAST_CONFIG} />
+        <Footer />
+      </>
     </ErrorBoundary>
   );
 }

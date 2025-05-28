@@ -21,7 +21,7 @@ const SignUpForm = ({ onClose, switchToSignIn }) => {
     setError(null);
 
     try {
-      const res = await fetch("http://127.0.0.1:8787/api/v1/user/signup", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/user/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
