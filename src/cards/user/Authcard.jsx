@@ -12,9 +12,9 @@ const AuthCard = ({ children, title }) => (
     initial="hidden"
     animate="visible"
     exit="exit"
-    className="w-[450px] bg-white shadow-lg rounded-2xl p-10 border border-gray-200"
+    className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6 sm:p-10 border border-gray-200"
   >
-    <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">{title}</h2>
+    <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 text-gray-800">{title}</h2>
     {children}
   </motion.div>
 );

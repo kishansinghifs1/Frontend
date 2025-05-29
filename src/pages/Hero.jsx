@@ -5,6 +5,7 @@ import AddSparePartModal from "../cards/product/AddSparePartModal";
 import UseSparePartModal from "../cards/product/UseSparePartModal";
 import Header1 from "../components/Dashboardheader/Header1";
 import { AnimatePresence } from "framer-motion";
+import Footer from "../components/Footer";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -38,92 +39,96 @@ const Hero = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
+    <div className="flex flex-col h-screen bg-gray-50 text-gray-900">
       <Header1 />
-      <main className="flex flex-col md:flex-row cursor-default bg-gray-100 p-6 md:p-10 gap-6 flex-grow overflow-auto">
-        {/* Left Side */}
-        <div className="md:w-1/3 flex justify-center items-center">
-          <div className="bg-white shadow-lg rounded-2xl p-6 md:p-8 w-full max-w-sm h-auto md:h-[70vh] flex flex-col justify-start text-center">
-            <UserCog size={100} color="grey" />
-            <h1 className="text-4xl md:text-5xl font-bold mb-5 md:mb-7 text-gray-800 text-center self-start">
-              Spare Part Management
-            </h1>
-            <p className="text-gray-600 p-2 md:p-3 leading-relaxed text-xl md:text-2xl w-full">
-              “Effortlessly manage, track, and update all your spare parts in one smart system...”
-            </p>
-          </div>
-        </div>
 
-        {/* Right Side */}
-        <div className="md:w-2/3 flex items-center justify-center">
-          <div className="w-full max-w-3xl space-y-6">
-            <div className="bg-gray-300 shadow rounded-xl p-4 md:p-6">
-              <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-1 md:mb-2">
-                Manage Your Spare Parts Seamlessly
-              </h2>
-              <p className="text-gray-600 text-xs md:text-sm">
-                Add new spare parts, log their usage, or monitor the complete inventory.
+      {/* Scrollable content wrapper */}
+      <div className="flex-1 overflow-y-auto">
+        <main className="flex flex-col md:flex-row bg-gray-100 p-4 md:p-10 gap-6 min-h-full">
+          {/* Left Side */}
+          <div className="md:w-1/3 flex justify-center items-start md:items-center">
+            <div className="bg-white shadow-lg rounded-2xl p-6 md:p-8 w-full max-w-sm flex flex-col justify-start text-center">
+              <UserCog size={100} color="grey" />
+              <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800 text-start">
+                Spare Part Management
+              </h1>
+              <p className="text-gray-600 leading-relaxed text-base md:text-xl">
+                “Effortlessly manage, track, and update all your spare parts in one smart system...”
               </p>
             </div>
+          </div>
 
-            {/* Action Cards */}
-            <div className="space-y-4">
-              {/* Add Spare Part */}
-              <div className="bg-white shadow rounded-xl p-4 md:p-5 flex items-center justify-between">
-                <div>
-                  <h3 className="text-base md:text-lg font-bold text-gray-800">Add Spare Part</h3>
-                  <p className="text-xs md:text-sm text-gray-600">Register new items to your inventory.</p>
-                </div>
-                <button
-                  onClick={() => setShowAddForm(true)}
-                  className="bg-blue-300 hover:bg-gray-300 text-black px-6 md:px-8 py-1.5 md:py-2 rounded flex items-center space-x-2"
-                >
-                  <DiamondPlus size={18} />
-                  <span className="text-base md:text-lg font-medium">Add</span>
-                </button>
+          {/* Right Side */}
+          <div className="md:w-2/3 flex items-center justify-center">
+            <div className="w-full max-w-3xl space-y-6">
+              <div className="bg-gray-300 shadow rounded-xl p-4 md:p-6">
+                <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-1">
+                  Manage Your Spare Parts Seamlessly
+                </h2>
+                <p className="text-gray-600 text-sm">
+                  Add new spare parts, log their usage, or monitor the complete inventory.
+                </p>
               </div>
 
-              {/* Use Spare Part */}
-              <div className="bg-white shadow rounded-xl p-4 md:p-5 flex items-center justify-between">
-                <div>
-                  <h3 className="text-base md:text-lg font-bold text-gray-800">Use Spare Part</h3>
-                  <p className="text-xs md:text-sm text-gray-600">Log usage of spare parts.</p>
+              {/* Action Cards */}
+              <div className="space-y-4">
+                {/* Add Spare Part */}
+                <div className="bg-white shadow rounded-xl p-4 flex items-center justify-between">
+                  <div>
+                    <h3 className="text-base md:text-lg font-bold text-gray-800">Add Spare Part</h3>
+                    <p className="text-sm text-gray-600">Register new items to your inventory.</p>
+                  </div>
+                  <button
+                    onClick={() => setShowAddForm(true)}
+                    className="bg-blue-300 hover:bg-gray-300 text-black px-6 py-2 rounded flex items-center space-x-2"
+                  >
+                    <DiamondPlus size={18} />
+                    <span className="text-base font-medium">Add</span>
+                  </button>
                 </div>
-                <button
-                  onClick={() => {
-                    setUseForm((prev) => ({
-                      ...prev,
-                      timestamp: new Date().toLocaleString(),
-                    }));
-                    setShowUseForm(true);
-                  }}
-                  className="bg-blue-300 hover:bg-gray-300 text-black px-6 md:px-8 py-1.5 md:py-2 rounded flex items-center space-x-2"
-                >
-                  <Hammer size={18} />
-                  <span className="text-base md:text-lg font-medium">Use</span>
-                </button>
-              </div>
 
-              {/* View All Parts */}
-              <div className="bg-white shadow rounded-xl p-4 md:p-5 flex items-center justify-between">
-                <div>
-                  <h3 className="text-base md:text-lg font-bold text-gray-800">View All Parts</h3>
-                  <p className="text-xs md:text-sm text-gray-600">Review and manage only by Admin.</p>
+                {/* Use Spare Part */}
+                <div className="bg-white shadow rounded-xl p-4 flex items-center justify-between">
+                  <div>
+                    <h3 className="text-base md:text-lg font-bold text-gray-800">Use Spare Part</h3>
+                    <p className="text-sm text-gray-600">Log usage of spare parts.</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setUseForm((prev) => ({
+                        ...prev,
+                        timestamp: new Date().toLocaleString(),
+                      }));
+                      setShowUseForm(true);
+                    }}
+                    className="bg-blue-300 hover:bg-gray-300 text-black px-6 py-2 rounded flex items-center space-x-2"
+                  >
+                    <Hammer size={18} />
+                    <span className="text-base font-medium">Use</span>
+                  </button>
                 </div>
-                <button
-                  onClick={() => navigate("/stat")}
-                  className="bg-blue-300 hover:bg-gray-300 text-black px-5 md:px-7 py-1.5 md:py-2 rounded flex items-center space-x-2"
-                >
-                  <Eye size={18} />
-                  <span className="text-base md:text-lg font-medium">View</span>
-                </button>
+
+                {/* View All Parts */}
+                <div className="bg-white shadow rounded-xl p-4 flex items-center justify-between">
+                  <div>
+                    <h3 className="text-base md:text-lg font-bold text-gray-800">View All Parts</h3>
+                    <p className="text-sm text-gray-600">Review and manage only by Admin.</p>
+                  </div>
+                  <button
+                    onClick={() => navigate("/stat")}
+                    className="bg-blue-300 hover:bg-gray-300 text-black px-6 py-2 rounded flex items-center space-x-2"
+                  >
+                    <Eye size={18} />
+                    <span className="text-base font-medium">View</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
 
-      {/* Modals with AnimatePresence */}
+      {/* Modals */}
       <AnimatePresence>
         {showAddForm && (
           <AddSparePartModal
@@ -142,6 +147,7 @@ const Hero = () => {
           />
         )}
       </AnimatePresence>
+      <Footer/>
     </div>
   );
 };

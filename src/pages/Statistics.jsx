@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-// 👇 In-memory cache
 let cachedUsedParts = null;
 
 const formatDate = (date) => date.toISOString().split("T")[0];
@@ -46,11 +45,9 @@ const Statistics = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      // Check if the page was reloaded
       const isReload = sessionStorage.getItem("reloaded") === "true";
 
       if (isReload) {
-        // Clear cache and session flag
         cachedUsedParts = null;
         sessionStorage.removeItem("reloaded");
       }
@@ -77,7 +74,6 @@ const Statistics = () => {
     loadData();
   }, []);
 
-  // Detect hard reloads and store flag
   useEffect(() => {
     if (performance.getEntriesByType("navigation")[0]?.type === "reload") {
       sessionStorage.setItem("reloaded", "true");
@@ -119,14 +115,18 @@ const Statistics = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <h1 className="text-3xl font-bold mb-6">View Spare Parts Usage</h1>
+    <div className="min-h-screen bg-gray-50 p-4 sm:p-8">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center sm:text-left">
+        View Spare Parts Usage
+      </h1>
 
-      <div className="mb-4 flex gap-4">
+      <div className="mb-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
         {["weekly", "monthly", "yearly"].map((p) => (
           <button
             key={p}
-            className={`px-4 py-2 rounded ${period === p ? "bg-blue-600 text-white" : "bg-gray-300"}`}
+            className={`px-3 py-2 rounded text-sm sm:text-base transition ${
+              period === p ? "bg-blue-600 text-white" : "bg-gray-300 hover:bg-gray-400"
+            }`}
             onClick={() => {
               setPeriod(p);
               setPage(1);
@@ -137,56 +137,58 @@ const Statistics = () => {
         ))}
       </div>
 
-      <div className="flex gap-4 mb-6">
+      <div className="mb-6">
         <button
           onClick={exportCSV}
-          className="bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700 w-full sm:w-auto"
         >
           Export CSV
         </button>
       </div>
 
-      {loading && <p>Loading usage data...</p>}
-      {error && <p className="text-blue-400">{error}</p>}
+      {loading && <p className="text-center text-gray-600">Loading usage data...</p>}
+      {error && <p className="text-center text-red-500">{error}</p>}
 
       {!loading && !error && (
         <>
-          <table className="w-full border-collapse border border-gray-300 mb-4">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="border border-gray-300 px-3 py-1 text-left">Period</th>
-                <th className="border border-gray-300 px-3 py-1 text-left">Product ID</th>
-                <th className="border border-gray-300 px-3 py-1 text-left">Description</th>
-                <th className="border border-gray-300 px-3 py-1 text-left">Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginated.map(({ period, productId, description, timestamp }, idx) => (
-                <tr key={idx} className="odd:bg-white even:bg-gray-50">
-                  <td className="border border-gray-300 px-3 py-1">{period}</td>
-                  <td className="border border-gray-300 px-3 py-1">{productId}</td>
-                  <td className="border border-gray-300 px-3 py-1">{description}</td>
-                  <td className="border border-gray-300 px-3 py-1">{timestamp}</td>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-gray-300 mb-4 text-sm">
+              <thead>
+                <tr className="bg-gray-200">
+                  <th className="border border-gray-300 px-3 py-2 text-left">Period</th>
+                  <th className="border border-gray-300 px-3 py-2 text-left">Product ID</th>
+                  <th className="border border-gray-300 px-3 py-2 text-left">Description</th>
+                  <th className="border border-gray-300 px-3 py-2 text-left">Date</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {paginated.map(({ period, productId, description, timestamp }, idx) => (
+                  <tr key={idx} className="odd:bg-white even:bg-gray-50">
+                    <td className="border border-gray-300 px-3 py-2">{period}</td>
+                    <td className="border border-gray-300 px-3 py-2">{productId}</td>
+                    <td className="border border-gray-300 px-3 py-2">{description}</td>
+                    <td className="border border-gray-300 px-3 py-2">{timestamp}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
             <button
               onClick={() => setPage((p) => Math.max(p - 1, 1))}
               disabled={page === 1}
-              className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+              className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50 w-full sm:w-auto"
             >
               Previous
             </button>
-            <span className="text-gray-700">
+            <span className="text-gray-700 text-center">
               Page {page} of {totalPages}
             </span>
             <button
               onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
               disabled={page === totalPages}
-              className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+              className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50 w-full sm:w-auto"
             >
               Next
             </button>

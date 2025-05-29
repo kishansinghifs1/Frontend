@@ -1,6 +1,7 @@
 import { Mail, User, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../userAuth/AuthContext";
+
 const UserDropdown = ({ user }) => {
   const navigate = useNavigate();
   const { setUser } = useAuth();
@@ -23,25 +24,33 @@ const UserDropdown = ({ user }) => {
   };
 
   return (
-    <div className="absolute right-0 mt-2 w-96 p-6 rounded-xl shadow-2xl backdrop-blur-md bg-blue-200/70 text-black text-base z-50">
-      <p className="mb-1 flex items-center space-x-2">
-        <User size={20} className="text-gray-600" />
-        <strong>Name:</strong>
-        <span>{user.name}</span>
-      </p>
-      <p className="mb-1 flex items-center space-x-2">
-        <Mail size={20} className="text-gray-600" />
-        <strong>E-mail:</strong>
-        <span>{user.email}</span>
-      </p>
-      <p className="mb-4 flex items-center space-x-2">
-        <Shield size={20} className="text-gray-600" />
-        <strong>Role:</strong>
-        <span>{user.role}</span>
-      </p>
+    <div className="absolute right-1 top-15 w-80 max-w-[90vw] p-4 rounded-xl shadow-lg backdrop-blur-md bg-blue-200/70 text-black z-50">
+      <div className="space-y-3 text-sm sm:text-base">
+        <div className="flex items-start space-x-2">
+          <User className="text-gray-700 mt-1" size={18} />
+          <div>
+            <span className="font-semibold">Name:</span> {user.name}
+          </div>
+        </div>
+
+        <div className="flex items-start space-x-2">
+          <Mail className="text-gray-700 mt-1" size={18} />
+          <div>
+            <span className="font-semibold">Email:</span> {user.email}
+          </div>
+        </div>
+
+        <div className="flex items-start space-x-2">
+          <Shield className="text-gray-700 mt-1" size={18} />
+          <div>
+            <span className="font-semibold">Role:</span> {user.role}
+          </div>
+        </div>
+      </div>
+
       <button
-        className="w-full bg-blue-900 text-white py-2 cursor-pointer rounded hover:bg-blue-400 transition"
         onClick={handleLogout}
+        className="mt-5 w-full bg-blue-900 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
       >
         Logout
       </button>

@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import SignInForm from "../cards/user/SignInForm.jsx";
 import SignUpForm from "../cards/user/SignUpForm.jsx";
 import { useAuth } from "../userAuth/AuthContext.jsx";
+import Footer from "../components/Footer.jsx";
 
 const REDIRECT_DELAY = 1000;
 
@@ -63,37 +64,40 @@ const Home = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Header />
 
-      <div className="pt-24 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center min-h-[calc(100vh-112px-96px)] text-center">
-        {/* Title + Icon */}
-        <div className="flex flex-col md:flex-row items-center text-center mb-10 gap-6 max-w-4xl">
-          <Cog size={100} color="gray" className="animate-spin mx-auto md:mx-0" />
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
-            Spare Part Management
-          </h1>
-        </div>
+      {/* Main content scrolls naturally */}
+      <main className="flex-1 px-4 sm:px-6 lg:px-8 py-10">
+        <div className="flex flex-col items-center text-center">
+          {/* Title + Icon */}
+          <div className="flex flex-col md:flex-row items-center text-center mb-10 gap-6 max-w-4xl">
+            <Cog size={100} color="gray" className="animate-spin mx-auto md:mx-0" />
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+              Spare Part Management
+            </h1>
+          </div>
 
-        {/* Description */}
-        <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl mb-10 px-4">
-          Efficiently manage your inventory, track parts, and streamline operations all in one place.
-        </p>
+          {/* Description */}
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl mb-10 px-4">
+            Efficiently manage your inventory, track parts, and streamline operations all in one place.
+          </p>
 
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4">
-          <button
-            onClick={() => handleModalSwitch("signin")}
-            className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition text-base font-medium w-full sm:w-auto"
-          >
-            Sign In
-          </button>
-          <button
-            onClick={() => handleModalSwitch("signup")}
-            className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition text-base font-medium w-full sm:w-auto"
-          >
-            Sign Up
-          </button>
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <button
+              onClick={() => handleModalSwitch("signin")}
+              className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition text-base font-medium w-full sm:w-auto"
+            >
+              Sign In
+            </button>
+            <button
+              onClick={() => handleModalSwitch("signup")}
+              className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition text-base font-medium w-full sm:w-auto"
+            >
+              Sign Up
+            </button>
+          </div>
         </div>
 
         {/* Modal */}
@@ -126,10 +130,11 @@ const Home = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </main>
 
+      <Footer />
       <ToastContainer />
-    </>
+    </div>
   );
 };
 
