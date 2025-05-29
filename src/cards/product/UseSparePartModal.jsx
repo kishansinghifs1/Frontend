@@ -116,8 +116,8 @@ const UseSparePartModal = ({ formData, setFormData, onCancel }) => {
             {scanning && (
               <div className="flex justify-center items-center mt-2 h-[190px]">
                 <BarcodeScannerComponent
-                  width={270}
-                  height={160}
+                  width={window.innerWidth<400 ? 180 : 270}
+                  height={window.innerWidth<400 ? 90 :160}
                   onUpdate={(err, result) => {
                     if (result) {
                       setFormData({ ...formData, productId: result.text });
