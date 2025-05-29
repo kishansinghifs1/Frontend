@@ -65,42 +65,49 @@ const Home = () => {
   return (
     <>
       <Header />
-      <div className="pt-28 px-4 flex flex-col items-center justify-center h-[calc(100vh-112px-96px)] text-center relative">
-        <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6 mb-6">
-          <Cog size={120} color="gray" className="animate-spin" />
-          <h2 className="text-5xl md:text-7xl font-bold">Spare Part Management</h2>
+
+      <div className="pt-24 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center min-h-[calc(100vh-112px-96px)] text-center">
+        {/* Title + Icon */}
+        <div className="flex flex-col md:flex-row items-center text-center mb-10 gap-6 max-w-4xl">
+          <Cog size={100} color="gray" className="animate-spin mx-auto md:mx-0" />
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+            Spare Part Management
+          </h1>
         </div>
 
-        <p className="text-2xl p-2 max-w-2xl mb-10 text-gray-600">
+        {/* Description */}
+        <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl mb-10 px-4">
           Efficiently manage your inventory, track parts, and streamline operations all in one place.
         </p>
 
-        <div className="flex space-x-6">
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4">
           <button
             onClick={() => handleModalSwitch("signin")}
-            className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition text-base font-medium"
+            className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition text-base font-medium w-full sm:w-auto"
           >
             Sign In
           </button>
           <button
             onClick={() => handleModalSwitch("signup")}
-            className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition text-base font-medium"
+            className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition text-base font-medium w-full sm:w-auto"
           >
             Sign Up
           </button>
         </div>
 
+        {/* Modal */}
         <AnimatePresence>
           {modal && (
             <motion.div
-              className="fixed inset-0 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50"
+              className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center px-4 z-50"
               variants={backdropVariants}
               initial="hidden"
               animate="visible"
               exit="hidden"
               onClick={handleModalClose}
             >
-              <div onClick={(e) => e.stopPropagation()}>
+              <div onClick={(e) => e.stopPropagation()} className="w-full max-w-md">
                 {modal === "signin" && (
                   <SignInForm
                     onClose={handleModalClose}
@@ -120,6 +127,7 @@ const Home = () => {
           )}
         </AnimatePresence>
       </div>
+
       <ToastContainer />
     </>
   );

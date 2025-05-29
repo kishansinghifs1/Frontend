@@ -40,28 +40,28 @@ const Hero = () => {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
       <Header1 />
-      <main className="flex md:flex-row flex-col cursor-default h-screen bg-gray-100 p-10 gap-6">
+      <main className="flex flex-col md:flex-row cursor-default bg-gray-100 p-6 md:p-10 gap-6 flex-grow overflow-auto">
         {/* Left Side */}
         <div className="md:w-1/3 flex justify-center items-center">
-          <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-sm h-[70vh] flex flex-col justify-start text-center">
+          <div className="bg-white shadow-lg rounded-2xl p-6 md:p-8 w-full max-w-sm h-auto md:h-[70vh] flex flex-col justify-start text-center">
             <UserCog size={100} color="grey" />
-            <h1 className="text-5xl font-bold mb-7 text-gray-800 text-center self-start">
+            <h1 className="text-4xl md:text-5xl font-bold mb-5 md:mb-7 text-gray-800 text-center self-start">
               Spare Part Management
             </h1>
-            <p className="text-gray-600 p-3 leading-relaxed text-2xl w-full">
+            <p className="text-gray-600 p-2 md:p-3 leading-relaxed text-xl md:text-2xl w-full">
               “Effortlessly manage, track, and update all your spare parts in one smart system...”
             </p>
           </div>
         </div>
 
         {/* Right Side */}
-        <div className="md:w-2/3 flex items-center">
-          <div className="w-full space-y-6">
-            <div className="bg-gray-300 shadow rounded-xl p-6">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">
+        <div className="md:w-2/3 flex items-center justify-center">
+          <div className="w-full max-w-3xl space-y-6">
+            <div className="bg-gray-300 shadow rounded-xl p-4 md:p-6">
+              <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-1 md:mb-2">
                 Manage Your Spare Parts Seamlessly
               </h2>
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-600 text-xs md:text-sm">
                 Add new spare parts, log their usage, or monitor the complete inventory.
               </p>
             </div>
@@ -69,27 +69,25 @@ const Hero = () => {
             {/* Action Cards */}
             <div className="space-y-4">
               {/* Add Spare Part */}
-              <div className="bg-white shadow rounded-xl p-5 flex items-center justify-between">
+              <div className="bg-white shadow rounded-xl p-4 md:p-5 flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-800">Add Spare Part</h3>
-                  <p className="text-sm text-gray-600">Register new items to your inventory.</p>
+                  <h3 className="text-base md:text-lg font-bold text-gray-800">Add Spare Part</h3>
+                  <p className="text-xs md:text-sm text-gray-600">Register new items to your inventory.</p>
                 </div>
                 <button
                   onClick={() => setShowAddForm(true)}
-                  className="bg-blue-300 hover:bg-gray-300 text-black px-8 py-2 rounded"
+                  className="bg-blue-300 hover:bg-gray-300 text-black px-6 md:px-8 py-1.5 md:py-2 rounded flex items-center space-x-2"
                 >
-                  <div className="flex items-center space-x-2">
-                    <DiamondPlus size={20} />
-                    <span className="text-lg font-medium">Add</span>
-                  </div>
+                  <DiamondPlus size={18} />
+                  <span className="text-base md:text-lg font-medium">Add</span>
                 </button>
               </div>
 
               {/* Use Spare Part */}
-              <div className="bg-white shadow rounded-xl p-5 flex items-center justify-between">
+              <div className="bg-white shadow rounded-xl p-4 md:p-5 flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-800">Use Spare Part</h3>
-                  <p className="text-sm text-gray-600">Log usage of spare parts.</p>
+                  <h3 className="text-base md:text-lg font-bold text-gray-800">Use Spare Part</h3>
+                  <p className="text-xs md:text-sm text-gray-600">Log usage of spare parts.</p>
                 </div>
                 <button
                   onClick={() => {
@@ -99,29 +97,25 @@ const Hero = () => {
                     }));
                     setShowUseForm(true);
                   }}
-                  className="bg-blue-300 hover:bg-gray-300 text-black px-8 py-2 rounded"
+                  className="bg-blue-300 hover:bg-gray-300 text-black px-6 md:px-8 py-1.5 md:py-2 rounded flex items-center space-x-2"
                 >
-                  <div className="flex items-center space-x-2">
-                    <Hammer size={20} />
-                    <span className="text-lg font-medium">Use</span>
-                  </div>
+                  <Hammer size={18} />
+                  <span className="text-base md:text-lg font-medium">Use</span>
                 </button>
               </div>
 
               {/* View All Parts */}
-              <div className="bg-white shadow rounded-xl p-5 flex items-center justify-between">
+              <div className="bg-white shadow rounded-xl p-4 md:p-5 flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-800">View All Parts</h3>
-                  <p className="text-sm text-gray-600">Review and manage only by Admin.</p>
+                  <h3 className="text-base md:text-lg font-bold text-gray-800">View All Parts</h3>
+                  <p className="text-xs md:text-sm text-gray-600">Review and manage only by Admin.</p>
                 </div>
                 <button
                   onClick={() => navigate("/stat")}
-                  className="bg-blue-300 hover:bg-gray-300 text-black px-7 py-2 rounded"
+                  className="bg-blue-300 hover:bg-gray-300 text-black px-5 md:px-7 py-1.5 md:py-2 rounded flex items-center space-x-2"
                 >
-                  <div className="flex items-center space-x-2">
-                    <Eye size={20} />
-                    <span className="text-lg font-medium">View</span>
-                  </div>
+                  <Eye size={18} />
+                  <span className="text-base md:text-lg font-medium">View</span>
                 </button>
               </div>
             </div>
